@@ -409,6 +409,15 @@
                             <button id="close-map-btn" class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[10px] text-slate-700 hover:bg-slate-50">Close</button>
                         </div>
                     </div>
+                    <!-- Mode switcher -->
+                    <div class="mb-3 flex flex-wrap items-center gap-2">
+                        <div class="text-[10px] text-slate-500">Mode:</div>
+                        <div id="mode-switch" class="inline-flex rounded-lg border border-slate-200 p-1">
+                            <button data-mode="private" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50 bg-slate-100">Private</button>
+                            <button data-mode="taxi" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Taxi</button>
+                            <button data-mode="jeepney" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Jeepney</button>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-4">
                         <div class="md:col-span-3">
                             <div id="route-map" class="h-[360px] w-full rounded-xl border border-slate-100"></div>
@@ -417,6 +426,11 @@
                             <div class="rounded-xl border border-slate-100 p-2 text-[12px]">
                                 <div class="mb-2 font-semibold">Route Options</div>
                                 <ul id="route-list" class="space-y-2"></ul>
+                                <!-- POI list for Taxi/Jeepney -->
+                                <div id="poi-section" class="mt-3 hidden">
+                                    <div id="poi-title" class="mb-1 text-[11px] font-semibold text-slate-700">Nearby</div>
+                                    <ul id="poi-list" class="space-y-2"></ul>
+                                </div>
                                 <div class="mt-2 text-[10px] text-slate-500">Legend: <span class="inline-block h-2 w-3 rounded-sm bg-emerald-500 align-middle"></span> Shortest · <span class="inline-block h-2 w-3 rounded-sm bg-sky-500 align-middle"></span> Fastest · <span class="inline-block h-2 w-3 rounded-sm bg-slate-300 align-middle"></span> Alternate</div>
                             </div>
                         </div>

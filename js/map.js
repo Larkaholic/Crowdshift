@@ -6,6 +6,7 @@ const MapModule = (() => {
   let layers = []; // route layer refs
   let markers = [];
   let currentDest = null;
+  let poiMarkers = [];
 
   const COLORS = {
     shortest: '#10b981', // emerald-500
@@ -31,6 +32,8 @@ const MapModule = (() => {
     layers = [];
     markers.forEach(m => map && map.removeLayer(m));
     markers = [];
+  poiMarkers.forEach(m => map && map.removeLayer(m));
+  poiMarkers = [];
   }
 
   function addMarker(latlng, opts = {}) {
@@ -144,8 +147,142 @@ const MapModule = (() => {
     ];
   }
 
+  // Multi-leg helpers
+  function addPoiMarker(latlng, label, color = 'purple') {
+    const icon = L.divIcon({
+      className: 'poi-pin',
+      html: `<div style="background:${color};color:white;border-radius:8px;padding:2px 6px;font-size:10px;box-shadow:0 1px 2px rgba(0,0,0,.2)">${label}</div>`,
+      iconSize: [0, 0],
+    });
+    const mk = L.marker(latlng, { icon }).addTo(map);
+    poiMarkers.push(mk);
+    return mk;
+  }
+
+  function randomNearby(origin, count = 4, radiusMeters = 800) {
+    const [lat, lng] = origin;
+    const results = [];
+    for (let i = 0; i < count; i++) {
+      const dx = (Math.random() - 0.5) * (radiusMeters / 111320) * 2; // deg lat
+      const dy = (Math.random() - 0.5) * (radiusMeters / (111320 * Math.cos(lat * Math.PI / 180))) * 2; // deg lng
+      results.push([lat + dx, lng + dy]);
+    }
+    return results;
+  }
+
+  async function showViaTaxi({ start, dest, destName, stands }) {
+    ensureMap();
+    clearRoutes();
+    currentDest = destName;
+
+    addMarker(start, { title: 'You' });
+    addMarker(dest, { title: destName });
+
+    const taxiStands = (stands && stands.length ? stands : randomNearby(start, 5)).map((p, idx) => ({
+      name: `Taxi Stand ${idx + 1}`,
+      coords: p,
+    }));
+
+    // draw POIs
+    taxiStands.forEach((s, i) => addPoiMarker(s.coords, `Taxi ${i + 1}`, '#9333ea'));
+
+    // choose nearest stand by walking distance (approx straight-line fallback)
+    let best = null;
+    let bestDist = Infinity;
+    taxiStands.forEach(s => {
+      const d = L.latLng(start[0], start[1]).distanceTo(L.latLng(s.coords[0], s.coords[1]));
+      if (d < bestDist) { bestDist = d; best = s; }
+    });
+
+    // route: start -> stand, stand -> dest
+    try {
+      const leg1 = await routeBetween(start, best.coords);
+      const best1 = leg1.sort((a,b)=>a.summary.totalTime-b.summary.totalTime)[0];
+      const leg2 = await routeBetween(best.coords, dest);
+      const best2 = leg2.sort((a,b)=>a.summary.totalTime-b.summary.totalTime)[0];
+
+      const coords1 = best1.coordinates.map(c => [c.lat, c.lng]);
+      const coords2 = best2.coordinates.map(c => [c.lat, c.lng]);
+      renderRoutePolyline(coords1, '#f59e0b'); // amber for access leg
+      renderRoutePolyline(coords2, '#0ea5e9'); // sky for main leg
+      fitTo([ ...coords1, ...coords2 ]);
+
+      const toKm = m => (m / 1000).toFixed(1);
+      const toMin = s => Math.round(s / 60);
+      return {
+        poi: taxiStands,
+        routeItems: [
+          { label: 'Walk to Taxi Stand', color: '#f59e0b', summary: { distKm: toKm(best1.summary.totalDistance), mins: toMin(best1.summary.totalTime) } },
+          { label: 'Taxi to Destination', color: '#0ea5e9', summary: { distKm: toKm(best2.summary.totalDistance), mins: toMin(best2.summary.totalTime) } },
+      ]
+      };
+    } catch (e) {
+      const straight = [start, dest].map(([lat,lng])=>L.latLng(lat,lng));
+      renderRoutePolyline(straight, COLORS.alternate);
+      fitTo(straight);
+      return { poi: taxiStands, routeItems: [ { label: 'Alternate', color: COLORS.alternate, summary: { distKm: '?', mins: '?' } } ] };
+    }
+  }
+
+  async function showViaJeepney({ start, dest, destName, terminals }) {
+    ensureMap();
+    clearRoutes();
+    currentDest = destName;
+
+    addMarker(start, { title: 'You' });
+    addMarker(dest, { title: destName });
+
+    const jeeps = (terminals && terminals.length ? terminals : randomNearby(start, 6, 1200)).map((p, idx) => ({
+      name: `Jeepney Terminal ${idx + 1}`,
+      route: idx % 2 === 0 ? 'J1' : 'J2',
+      coords: p,
+    }));
+
+    jeeps.forEach((j, i) => addPoiMarker(j.coords, `${j.route}`, '#16a34a'));
+
+    // pick terminal nearest to start, and also somewhat towards dest by heuristic (min sum of distances)
+    let best = null;
+    let bestScore = Infinity;
+    jeeps.forEach(j => {
+      const d1 = L.latLng(start[0], start[1]).distanceTo(L.latLng(j.coords[0], j.coords[1]));
+      const d2 = L.latLng(j.coords[0], j.coords[1]).distanceTo(L.latLng(dest[0], dest[1]));
+      const score = d1 * 0.7 + d2 * 0.3;
+      if (score < bestScore) { bestScore = score; best = j; }
+    });
+
+    try {
+      const leg1 = await routeBetween(start, best.coords);
+      const best1 = leg1.sort((a,b)=>a.summary.totalTime-b.summary.totalTime)[0];
+      const leg2 = await routeBetween(best.coords, dest);
+      const best2 = leg2.sort((a,b)=>a.summary.totalTime-b.summary.totalTime)[0];
+
+      const coords1 = best1.coordinates.map(c => [c.lat, c.lng]);
+      const coords2 = best2.coordinates.map(c => [c.lat, c.lng]);
+      renderRoutePolyline(coords1, '#f59e0b'); // walk to terminal
+      renderRoutePolyline(coords2, '#10b981'); // jeepney leg
+      fitTo([ ...coords1, ...coords2 ]);
+
+      const toKm = m => (m / 1000).toFixed(1);
+      const toMin = s => Math.round(s / 60);
+      return {
+        poi: jeeps,
+        routeItems: [
+          { label: `Walk to ${best.route} Terminal`, color: '#f59e0b', summary: { distKm: toKm(best1.summary.totalDistance), mins: toMin(best1.summary.totalTime) } },
+          { label: `${best.route} to Destination`, color: '#10b981', summary: { distKm: toKm(best2.summary.totalDistance), mins: toMin(best2.summary.totalTime) } },
+        ]
+      };
+    } catch (e) {
+      const straight = [start, dest].map(([lat,lng])=>L.latLng(lat,lng));
+      renderRoutePolyline(straight, COLORS.alternate);
+      fitTo(straight);
+      return { poi: jeeps, routeItems: [ { label: 'Alternate', color: COLORS.alternate, summary: { distKm: '?', mins: '?' } } ] };
+    }
+  }
+
   return {
     showRoutes,
+    showViaTaxi,
+    showViaJeepney,
   };
 })();
 
