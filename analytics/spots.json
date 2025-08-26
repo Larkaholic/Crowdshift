@@ -1,0 +1,16 @@
+{
+  "spots": [
+    { "id": "session-road", "name": "Session Road", "capacity": 1200, "active": 980 },
+    { "id": "burnham-park", "name": "Burnham Park", "capacity": 3000, "active": 1850 },
+    { "id": "mines-view", "name": "Mines View Park", "capacity": 1500, "active": 620 },
+    { "id": "botanical-garden", "name": "Botanical Garden", "capacity": 800, "active": 410 },
+    { "id": "wright-park", "name": "Wright Park", "capacity": 900, "active": 520 },
+    { "id": "sm-baguio", "name": "SM City Baguio", "capacity": 5000, "active": 2600 },
+    { "id": "camp-john-hay", "name": "Camp John Hay", "capacity": 2000, "active": 740 },
+    { "id": "public-market", "name": "Public Market", "capacity": 1800, "active": 1200 },
+    { "id": "teacher-camp", "name": "Teacher's Camp", "capacity": 700, "active": 260 },
+    { "id": "loakan-road", "name": "Loakan Road", "capacity": 600, "active": 210 },
+    { "id": "strawberry-farm", "name": "Strawberry Farm", "capacity": 1400, "active": 350 },
+    { "id": "lion-head", "name": "Lion's Head", "capacity": 400, "active": 120 }
+  ]
+}
