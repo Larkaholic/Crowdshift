@@ -107,6 +107,10 @@
         const newBal = num + state.amount;
         balEl.textContent = `₱${newBal.toFixed(2)}`;
       }
+      // Notify others (e.g., profile) about top-up success
+      try {
+        window.dispatchEvent(new CustomEvent('topup:success', { detail: { amount: state.amount } }));
+      } catch(_) {}
       setTimeout(closeTopup, 1000);
     }, 1000);
   }

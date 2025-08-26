@@ -57,7 +57,7 @@
                         <div class="text-xs text-slate-500">Baguio Smart Card</div>
                         <div class="text-base font-semibold">Welcome to Baguio</div>
                     </div>
-                    <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-card hover:bg-slate-50">
+                    <button id="open-profile-btn" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-card hover:bg-slate-50">
                         <span>Profile</span>
                     </button>
                 </div>
@@ -444,7 +444,7 @@
                 <div class="mb-3 flex items-start justify-between">
                     <div>
                         <div class="text-xs font-semibold">Active Balance</div>
-                        <div class="text-[10px] text-slate-500">Baguio Smart Card (R-4H52)</div>
+                        <div id="active-card-label" class="text-[10px] text-slate-500">Baguio Smart Card (R-4H52)</div>
                     </div>
                     <button class="text-[10px] text-brand-700 hover:underline">View All</button>
                 </div>
@@ -787,6 +787,66 @@
             </div>
         </div>
 
+        <!-- Profile Modal -->
+        <div id="profile-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+            <div class="w-full max-w-lg rounded-2xl bg-white p-4 shadow-card">
+                <div class="mb-2 flex items-center justify-between">
+                    <div class="text-xs font-semibold">Profile</div>
+                    <button id="profile-close" class="rounded-lg border border-slate-200 px-2.5 py-1 text-[10px] text-slate-700 hover:bg-slate-50">Close</button>
+                </div>
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-2 text-[12px]">
+                    <div class="md:col-span-2">
+                        <div class="text-[11px] font-semibold">Account</div>
+                        <div class="mt-2 grid grid-cols-2 gap-2">
+                            <input id="prof-name" class="rounded-lg border border-slate-200 p-2" placeholder="Full name" />
+                            <input id="prof-email" type="email" class="rounded-lg border border-slate-200 p-2" placeholder="Email" />
+                        </div>
+                        <div class="mt-2 text-right">
+                            <button id="prof-save" class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Save</button>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="mb-1 flex items-center justify-between">
+                            <div class="text-[11px] font-semibold">Linked Cards</div>
+                            <div class="flex items-center gap-2">
+                                <button id="card-register-btn" class="rounded-lg border border-slate-200 px-2.5 py-1 text-[10px] hover:bg-slate-50">Register Card</button>
+                            </div>
+                        </div>
+                        <ul id="cards-list" class="space-y-2"></ul>
+                        <div id="cards-empty" class="text-[10px] text-slate-500">No cards linked yet.</div>
+                    </div>
+                    <div id="card-register-panel" class="md:col-span-2 hidden">
+                        <div class="rounded-xl border border-slate-200 p-3">
+                            <div class="mb-2 text-[11px] font-semibold">Register Card</div>
+                            <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+                                <div>
+                                    <label class="mb-1 block text-[10px] text-slate-600">Enter Card ID</label>
+                                    <div class="flex gap-2">
+                                        <input id="card-id-input" class="flex-1 rounded-lg border border-slate-200 p-2" placeholder="e.g. R-4H52" />
+                                        <button id="card-link-btn" class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Link</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="mb-1 block text-[10px] text-slate-600">Scan QR</label>
+                                    <div class="space-y-2">
+                                        <div class="rounded-lg border border-slate-200 p-2">
+                                            <video id="qr-video" class="h-40 w-full rounded-md bg-black object-cover" playsinline></video>
+                                            <canvas id="qr-canvas" class="hidden"></canvas>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button id="qr-start" class="rounded-lg border border-slate-200 px-2.5 py-1 text-[10px] hover:bg-slate-50">Start Scan</button>
+                                            <button id="qr-stop" class="rounded-lg border border-slate-200 px-2.5 py-1 text-[10px] hover:bg-slate-50">Stop</button>
+                                        </div>
+                                        <div id="qr-feedback" class="text-[10px] text-slate-500"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Leaflet and Routing assets -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -799,6 +859,9 @@
         <script src="/js/shuttle.js" defer></script>
     <script src="/js/quickActions.js" defer></script>
     <script src="/js/topup.js" defer></script>
+    <!-- jsQR for QR scanning -->
+    <script src="https://unpkg.com/jsqr" defer></script>
+    <script src="/js/profile.js" defer></script>
     <script src="/js/analytics.js" defer></script>
         <script src="/js/main.js" defer></script>
     </body>
