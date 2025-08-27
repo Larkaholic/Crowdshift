@@ -2,7 +2,7 @@
 
 (function () {
   let current = {
-    start: [16.4023, 120.5960],
+  start: [16.4023, 120.5960],
     dest: null,
     destName: null,
     mode: 'private',
@@ -147,8 +147,18 @@
   }
 
   function init() {
-    document.querySelectorAll('.js-visit-now').forEach((btn) => {
-      btn.addEventListener('click', () => handleVisit(btn));
+    // pick up best-effort default start if available (set by places.js)
+    if (Array.isArray(window.__defaultStart)) {
+      current.start = window.__defaultStart;
+    }
+
+    // Delegate to support dynamically injected buttons
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest && e.target.closest('.js-visit-now');
+      if (btn) {
+        e.preventDefault();
+        handleVisit(btn);
+      }
     });
 
     const closeBtn = document.getElementById('close-map-btn');
