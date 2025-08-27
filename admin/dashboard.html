@@ -34,15 +34,14 @@
 				},
 			};
 		</script>
-				<style>
-					html, body { height: 100%; }
-					body { background: #f7faf9; }
-					*, *::before, *::after { box-sizing: border-box; }
-					#active-chart { display: block; max-width: 100% !important; }
-				</style>
+		<style>
+			html, body { height: 100%; width: 100%; overflow-x: hidden;}
+			body { background: #f7faf9; }
+			*, *::before, *::after { box-sizing: border-box; }
+			#active-chart { display: block; max-width: 100% !important; }
+		</style>
 	</head>
-		<body class="min-h-full text-slate-800">
-		<div class="mx-auto w-full max-w-xl p-2 sm:p-3 pr-3 sm:pr-3 box-border">
+		<body class="min-h-full text-slate-800 w-full md:w-[95%] mx-auto overflow-x-hidden px-3 md:px-0">
 			<!-- Header -->
 			<header class="sticky top-0 z-10 mb-4 rounded-2xl bg-white/80 p-2 md:p-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-card">
 				<div class="flex items-center gap-3">
@@ -57,9 +56,9 @@
 				</div>
 			</header>
 
-			<main class="grid -ml-[3rem] gap-3 sm:gap-4 lg:grid-cols-12">
+			<main class="grid gap-3 sm:gap-4 lg:grid-cols-12">
 				<!-- KPIs -->
-		        <section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-12 w-[77%] mx-auto md:w-full">
+				<section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-12 w-[80%] md:w-full">
 					<div class="mb-3 flex items-center justify-between">
 						<div>
 							<div class="text-xs font-semibold">City Analytics</div>
@@ -91,7 +90,7 @@
 				</section>
 
 				<!-- Trend Chart + Actions -->
-		        <section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-8 w-[77%] mx-auto md:w-full">
+				<section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-8 w-[80%] md:w-full">
 					<div class="mb-2 flex items-center justify-between">
 						<div class="text-xs font-semibold">Active Tourists Trend</div>
 						<div class="text-[10px] text-slate-500">Last 12 intervals</div>
@@ -100,7 +99,7 @@
 				</section>
 
 				<!-- Import/Export -->
-		        <section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-4 w-[77%] mx-auto md:w-full">
+				<section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-4 w-[80%] md:w-full">
 					<div class="mb-2 text-xs font-semibold">Data Management</div>
 					<div class="space-y-2 text-[12px]">
 						<div class="rounded-xl border border-slate-100 p-2">
@@ -116,7 +115,7 @@
 				</section>
 
 				<!-- Spots Table -->
-		        <section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-12 w-[77%] mx-auto md:w-full">
+				<section class="rounded-2xl bg-white p-2 md:p-3 shadow-card lg:col-span-12 w-[80%] md:w-full">
 					<div class="mb-2 flex items-center justify-between">
 						<div>
 							<div class="text-xs font-semibold">Tourist Spots</div>
@@ -144,7 +143,6 @@
 					</div>
 				</section>
 			</main>
-		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 		<script src="/admin/adminjs/admin.js" defer></script>
