@@ -72,12 +72,21 @@
   function renderTabs(active){
     const tabs = document.getElementById('cat-tabs');
     if(!tabs) return;
+    // Ensure horizontal scroll on small screens
+    tabs.classList.add('overflow-x-auto', 'whitespace-nowrap');
+    // Fallback inline styles for robustness (in case Tailwind classes aren't applied on this page)
+    tabs.style.overflowX = 'auto';
+    tabs.style.whiteSpace = 'nowrap';
+    tabs.style.webkitOverflowScrolling = 'touch';
+    tabs.setAttribute('role', 'tablist');
     tabs.innerHTML = '';
     CATEGORIES.forEach(cat => {
       const b = document.createElement('button');
-      b.className = 'rounded-lg border border-slate-200 px-2 py-1 text-[10px] hover:bg-slate-50';
+      b.className = 'inline-flex items-center rounded-lg border border-slate-200 px-2 py-1 text-[10px] hover:bg-slate-50 mr-2 shrink-0';
       if(cat.id === active) b.classList.add('bg-slate-100');
       b.dataset.cat = cat.id;
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', cat.id === active ? 'true' : 'false');
       b.innerHTML = `<span style="color:${cat.color}">${cat.icon}</span> ${cat.label}`;
       b.addEventListener('click', () => switchCategory(cat.id));
       tabs.appendChild(b);
@@ -88,7 +97,7 @@
     const grid = document.getElementById('reco-grid');
     const meta = document.getElementById('reco-meta');
     if(!grid) return;
-    renderTabs(catId);
+  renderTabs(catId);
     const cat = CATEGORIES.find(c => c.id === catId) || CATEGORIES[0];
     const items = DATA[cat.id] || [];
     grid.innerHTML = items.map(it => itemCard(cat, it)).join('');
