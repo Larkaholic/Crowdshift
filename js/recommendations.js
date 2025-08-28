@@ -143,6 +143,10 @@
           renderRouteList(r.routeItems);
         });
       });
+    } else if (mode === 'walking') {
+      const items = await MapModule.showWalking({ start, dest, destName });
+      renderRouteList(items);
+      showPoiList('', [], null);
     }
   }
 

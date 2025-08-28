@@ -98,6 +98,58 @@ const MapModule = (() => {
     });
   }
 
+  async function routeBetweenFoot(start, dest){
+    // Use OSRM foot profile
+    return new Promise((resolve, reject) => {
+      const control = L.Routing.control({
+        waypoints: [L.latLng(start[0], start[1]), L.latLng(dest[0], dest[1])],
+        router: L.Routing.osrmv1({ serviceUrl: 'https://router.project-osrm.org/route/v1', profile: 'foot' }),
+        routeWhileDragging: false,
+        addWaypoints: false,
+        show: false,
+      })
+        .on('routesfound', e => { resolve(e.routes); control.remove(); })
+        .on('routingerror', err => { control.remove(); reject(err?.error || err); })
+        .addTo(map);
+    });
+  }
+
+  async function showWalking({ start, dest, destName }){
+    ensureMap();
+    clearRoutes();
+    currentDest = destName;
+
+    addMarker(start, { title: 'Start' });
+    addMarker(dest, { title: destName });
+
+    try{
+      const routes = await routeBetweenFoot(start, dest);
+      const shortest = [...routes].sort((a,b)=>a.summary.totalDistance - b.summary.totalDistance)[0];
+      const coords = shortest.coordinates.map(c=>[c.lat,c.lng]);
+      // Compare to straight-line to detect big detours (e.g., due to one-way restrictions not relevant to walking)
+      const directM = L.latLng(start[0], start[1]).distanceTo(L.latLng(dest[0], dest[1]));
+      const detourRatio = shortest.summary.totalDistance / Math.max(1, directM);
+      if(detourRatio > 1.8){
+        // Fall back to direct line to "ignore" one-way constraints for walkers
+        const straight = [start, dest].map(([lat,lng])=>L.latLng(lat,lng));
+        renderRoutePolyline(straight, '#16a34a');
+        fitTo(straight);
+        const toKm = m => (m/1000).toFixed(1);
+        return [ { label: 'Walking (Direct, ignores one-way)', color: '#16a34a', summary: { distKm: toKm(directM), mins: '?' } } ];
+      }
+      renderRoutePolyline(coords, '#16a34a'); // green for walking
+      fitTo(coords);
+      const toKm = m => (m/1000).toFixed(1);
+      const toMin = s => Math.round(s/60);
+      return [ { label: 'Walking (Shortest)', color: '#16a34a', summary: { distKm: toKm(shortest.summary.totalDistance), mins: toMin(shortest.summary.totalTime) } } ];
+    }catch(e){
+      const straight = [start, dest].map(([lat,lng])=>L.latLng(lat,lng));
+      renderRoutePolyline(straight, COLORS.alternate);
+      fitTo(straight);
+      return [ { label: 'Walking (Alternate)', color: COLORS.alternate, summary: { distKm: '?', mins: '?' } } ];
+    }
+  }
+
   async function showRoutes({ start, dest, destName }) {
     ensureMap();
     clearRoutes();
@@ -283,6 +335,7 @@ const MapModule = (() => {
     showRoutes,
     showViaTaxi,
     showViaJeepney,
+  showWalking,
   };
 })();
 
