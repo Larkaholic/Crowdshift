@@ -65,8 +65,65 @@
         <div class="mt-2 flex items-center gap-2">
           <button class="js-visit-now rounded-lg bg-brand-600 px-2 py-1 text-[10px] font-semibold text-white hover:bg-brand-700" data-lat="${it.lat}" data-lng="${it.lng}" data-dest="${it.name}">Visit</button>
           <a href="#route-map-panel" class="rounded-lg border border-slate-200 px-2 py-1 text-[10px] hover:bg-slate-50">Details</a>
+          <button class="js-show-similar rounded-lg border border-slate-200 px-2 py-1 text-[10px] hover:bg-slate-50" title="Find similar within 300m" data-cat="${cat.id}" data-lat="${it.lat}" data-lng="${it.lng}" data-name="${it.name}">Similar nearby</button>
+        </div>
+        <div class="similar-container mt-2 hidden rounded-lg border border-slate-100 bg-slate-50 p-2">
+          <div class="mb-1 text-[10px] font-medium text-slate-600">Similar within 300 m</div>
+          <ul class="space-y-1 text-[11px]"></ul>
         </div>
       </div>`;
+  }
+
+  function haversineKm(lat1, lon1, lat2, lon2){
+    const toRad = (d)=>d*Math.PI/180;
+    const R = 6371; // km
+    const dLat = toRad(lat2-lat1);
+    const dLon = toRad(lon2-lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R*c;
+  }
+
+  function formatDistanceKm(km){
+    const m = Math.round(km*1000);
+    return m < 1000 ? `${m} m` : `${km.toFixed(1)} km`;
+  }
+
+  function showSimilarInCard(cardEl, catId, lat, lng, name){
+    const listWrap = cardEl.querySelector('.similar-container');
+    if(!listWrap) return;
+    const list = listWrap.querySelector('ul');
+    const items = (DATA[catId]||[])
+      .filter(it => it.name !== name)
+      .map(it => ({ it, distKm: haversineKm(lat, lng, it.lat, it.lng) }))
+      .filter(x => x.distKm <= 0.3)
+      .sort((a,b)=>a.distKm-b.distKm)
+      .slice(0,3);
+    if(items.length===0){
+      // Find the closest similar place even if beyond 300 m
+      const all = (DATA[catId]||[])
+        .filter(it => it.name !== name)
+        .map(it => ({ it, distKm: haversineKm(lat, lng, it.lat, it.lng) }))
+        .sort((a,b)=>a.distKm-b.distKm);
+      if(all.length){
+        const { it: closest, distKm } = all[0];
+        list.innerHTML = `
+          <li class="text-[10px] text-slate-500">No similar places within 300 m. Nearest option:</li>
+          <li class="mt-1 flex items-center justify-between gap-2">
+            <div class="truncate"><span class="font-medium">${closest.name}</span> <span class="text-slate-500">· ${formatDistanceKm(distKm)}</span></div>
+            <button class="js-visit-now rounded border border-slate-200 px-2 py-0.5 text-[10px] hover:bg-slate-100" data-lat="${closest.lat}" data-lng="${closest.lng}" data-dest="${closest.name}">Visit</button>
+          </li>`;
+      } else {
+        list.innerHTML = `<li class="text-[10px] text-slate-500">No similar places found in this category.</li>`;
+      }
+    } else {
+      list.innerHTML = items.map(({it, distKm}) => `
+        <li class="flex items-center justify-between gap-2">
+          <div class="truncate"><span class="font-medium">${it.name}</span> <span class="text-slate-500">· ${formatDistanceKm(distKm)}</span></div>
+          <button class="js-visit-now rounded border border-slate-200 px-2 py-0.5 text-[10px] hover:bg-slate-100" data-lat="${it.lat}" data-lng="${it.lng}" data-dest="${it.name}">Visit</button>
+        </li>`).join('');
+    }
+    listWrap.classList.remove('hidden');
   }
 
   function renderTabs(active){
@@ -103,6 +160,18 @@
     grid.innerHTML = items.map(it => itemCard(cat, it)).join('');
     // Attach Visit handlers (recommendations.js listens for .js-visit-now at DOMContentLoaded)
     // No extra wiring needed here.
+    // Wire Similar Nearby buttons per card
+    grid.querySelectorAll('.js-show-similar').forEach(btn => {
+      btn.addEventListener('click', (e)=>{
+        const el = e.currentTarget;
+        const card = el.closest('.rounded-xl.border');
+        const catId2 = el.dataset.cat;
+        const lat = parseFloat(el.dataset.lat);
+        const lng = parseFloat(el.dataset.lng);
+        const name = el.dataset.name;
+        if(card) showSimilarInCard(card, catId2, lat, lng, name);
+      });
+    });
     if(meta) meta.textContent = `${items.length} places in ${cat.label} · Updated just now`;
   }
 
