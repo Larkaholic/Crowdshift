@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <title>Crowdshift</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,14 +38,15 @@
             };
         </script>
         <style>
-            html, body { height: 100%; overflow-x: hidden; }
+            html, body { height: 100%; overflow-x: hidden; max-width: 100%; }
+            *, *::before, *::after { box-sizing: border-box; }
             body { background: #f7faf9; }
         </style>
     </head>
-    <body class="min-h-full text-slate-800 overflow-x-hidden">
-        <div class="mx-auto w-full max-w-md lg:max-w-7xl p-3">
+    <body class="min-h-full text-slate-800 overflow-x-hidden flex justify-center">
+        <div class="w-full max-w-full lg:max-w-7xl p-1">
             <!-- Top Nav -->
-            <header class="sticky top-0 z-10 mb-3 rounded-2xl bg-white/80 p-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-card">
+            <header class="sticky top-0 z-10 mb-3 rounded-2xl bg-white/80 p-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-card w-full">
                 <div class="flex items-center gap-3">
                     <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-100 text-brand-700">
                         <!-- Logo -->
@@ -54,8 +55,8 @@
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <div class="text-xs text-slate-500">CrowdShift Smart Card</div>
-                        <div class="text-base font-semibold">Less Congestion, More Connection</div>
+                        <div class="text-xs text-slate-500">Baguio Smart Card</div>
+                        <div class="text-base font-semibold">Welcome to Baguio</div>
                     </div>
                     <button id="open-profile-btn" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-card hover:bg-slate-50">
                         <span>Profile</span>
@@ -64,10 +65,10 @@
             </header>
 
             <!-- Desktop grid wrapper -->
-            <main class="grid gap-4 lg:grid-cols-12">
+            <main class="w-full max-w-full lg:max-w-7xl">
 
                 <!-- City Status -->
-                <section class="mb-4 rounded-2xl bg-white p-3 shadow-card w-[56%] md:w-full lg:col-span-12">
+                <section class="mb-4 rounded-2xl bg-white p-3 shadow-card w-full md:w-full lg:col-span-12">
                     <div class="mb-3 flex items-center justify-between">
                         <div>
                             <div class="text-xs text-slate-500">City Status</div>
@@ -118,12 +119,12 @@
                         </div>
                         <div class="mt-3 flex items-center justify-between">
                             <button id="city-refresh" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-700 shadow-card hover:bg-slate-50">Refresh</button>
-                            <button class="rounded-xl bg-brand-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-brand-700" onclick="window.location.href='./admin/dashboard.html'">View Detailed Analytics</button>
+                            <button class="rounded-xl bg-brand-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-brand-700">View Detailed Analytics</button>
                         </div>
                 </section>
 
                 <!-- Smart Card Options -->
-                <section id="smart-card-options" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-8 w-[56%] md:w-full">
+                <section id="smart-card-options" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-8 w-full md:w-full lg:col-span-12">
                     <div class="mb-2 flex items-center justify-between">
                         <div class="text-xs font-semibold">Smart Card Options</div>
                         <button class="text-[10px] text-brand-700 hover:underline">Compare All</button>
@@ -180,315 +181,314 @@
                     </div>
                 </section>
 
-            <!-- Smart Recommendations (categorized) -->
-            <section id="smart-recommendations" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-8 w-[56%] md:w-full">
-                <div class="mb-2 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-semibold">Smart Recommendations</div>
-                        <div class="text-[10px] text-slate-500">Nearby essentials by category</div>
-                    </div>
-                    <div id="cat-tabs" class="flex items-center gap-2 text-[10px]"></div>
-                </div>
-
-                <div id="reco-grid" class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3">
-                    <!-- cards injected by places.js -->
-                </div>
-                <div class="mt-3 flex items-center justify-between text-[10px] text-slate-400">
-                    <span id="reco-meta">Data updated moments ago</span>
-                    <button id="reco-refresh" class="text-brand-700 hover:underline">Refresh</button>
-                </div>
-
-                <!-- Curated tourist spot suggestions (merged from old section) -->
-                <div class="mt-4 border-t border-slate-100 pt-3">
+                <!-- Smart Recommendations (categorized) -->
+                <section id="smart-recommendations" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-8 w-full md:w-full lg:col-span-12">
                     <div class="mb-2 flex items-center justify-between">
                         <div>
-                            <div class="text-xs font-semibold">Curated Spots</div>
-                            <div class="text-[10px] text-slate-500">Perfect time & nearest transit</div>
+                            <div class="text-xs font-semibold">Smart Recommendations</div>
+                            <div class="text-[10px] text-slate-500">Nearby essentials by category</div>
                         </div>
-                        <button class="text-[10px] text-brand-700 hover:underline">Customize</button>
+                        <div id="cat-tabs" class="flex items-center gap-2 text-[10px]"></div>
                     </div>
-                    <div class="space-y-3">
-                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                            <div class="mb-2 flex items-start justify-between">
-                                <div>
-                                    <div class="text-xs font-semibold">Botanical Garden</div>
-                                    <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-600">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Best Now
-                                    </div>
-                                </div>
-                                <span class="text-[10px] text-slate-400">0.9 km</span>
-                            </div>
-                            <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
-                                <li>Less crowding</li>
-                                <li>Shaded walking paths</li>
-                                <li>Parking available</li>
-                            </ul>
-                            <div class="flex items-center justify-between">
-                                <div class="text-[10px] text-slate-500">Card benefits: 10% off, Shuttle R2</div>
-                                <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Botanical Garden" data-lat="16.4147" data-lng="120.6177">Visit Now</button>
-                            </div>
-                        </div>
 
-                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                            <div class="mb-2 flex items-start justify-between">
-                                <div>
-                                    <div class="text-xs font-semibold">Camp John Hay</div>
-                                    <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Good Soon
-                                    </div>
-                                </div>
-                                <span class="text-[10px] text-slate-400">3.2 km</span>
-                            </div>
-                            <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
-                                <li>Pine breeze</li>
-                                <li>Bike & nature trail</li>
-                                <li>Cafés nearby</li>
-                            </ul>
-                            <div class="flex items-center justify-between">
-                                <div class="text-[10px] text-slate-500">Card benefits: free hour bike</div>
-                                <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Camp John Hay" data-lat="16.4010" data-lng="120.6138">Visit Now</button>
-                            </div>
-                        </div>
+                    <div id="reco-grid" class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3">
+                        <!-- cards injected by places.js -->
+                    </div>
+                    <div class="mt-3 flex items-center justify-between text-[10px] text-slate-400">
+                        <span id="reco-meta">Data updated moments ago</span>
+                        <button id="reco-refresh" class="text-brand-700 hover:underline">Refresh</button>
+                    </div>
 
-                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                            <div class="mb-2 flex items-start justify-between">
-                                <div>
-                                    <div class="text-xs font-semibold">Wright Park</div>
-                                    <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-600">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Best Now
-                                    </div>
-                                </div>
-                                <span class="text-[10px] text-slate-400">4.0 km</span>
+                    <!-- Curated tourist spot suggestions (merged from old section) -->
+                    <div class="mt-4 border-t border-slate-100 pt-3">
+                        <div class="mb-2 flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-semibold">Curated Spots</div>
+                                <div class="text-[10px] text-slate-500">Perfect time & nearest transit</div>
                             </div>
-                            <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
-                                <li>Horseback riding</li>
-                                <li>Family friendly</li>
-                                <li>Open shade</li>
-                            </ul>
-                            <div class="flex items-center justify-between">
-                                <div class="text-[10px] text-slate-500">Card benefits: 5% off rentals</div>
-                                <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Wright Park" data-lat="16.4140" data-lng="120.6229">Visit Now</button>
-                            </div>
+                            <button class="text-[10px] text-brand-700 hover:underline">Customize</button>
                         </div>
-
-                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                            <div class="mb-2 flex items-start justify-between">
-                                <div>
-                                    <div class="text-xs font-semibold">Mines View Park</div>
-                                    <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Good Soon
+                        <div class="space-y-3">
+                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                                <div class="mb-2 flex items-start justify-between">
+                                    <div>
+                                        <div class="text-xs font-semibold">Botanical Garden</div>
+                                        <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-600">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Best Now
+                                        </div>
                                     </div>
+                                    <span class="text-[10px] text-slate-400">0.9 km</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400">4.8 km</span>
+                                <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
+                                    <li>Less crowding</li>
+                                    <li>Shaded walking paths</li>
+                                    <li>Parking available</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <div class="text-[10px] text-slate-500">Card benefits: 10% off, Shuttle R2</div>
+                                    <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Botanical Garden" data-lat="16.4147" data-lng="120.6177">Visit Now</button>
+                                </div>
                             </div>
-                            <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
-                                <li>Great viewpoint</li>
-                                <li>Souvenir stalls</li>
-                                <li>Snacks nearby</li>
-                            </ul>
-                            <div class="flex items-center justify-between">
-                                <div class="text-[10px] text-slate-500">Card benefits: 10% off food</div>
-                                <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Mines View Park" data-lat="16.4205" data-lng="120.6335">Visit Now</button>
+
+                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                                <div class="mb-2 flex items-start justify-between">
+                                    <div>
+                                        <div class="text-xs font-semibold">Camp John Hay</div>
+                                        <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Good Soon
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400">3.2 km</span>
+                                </div>
+                                <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
+                                    <li>Pine breeze</li>
+                                    <li>Bike & nature trail</li>
+                                    <li>Cafés nearby</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <div class="text-[10px] text-slate-500">Card benefits: free hour bike</div>
+                                    <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Camp John Hay" data-lat="16.4010" data-lng="120.6138">Visit Now</button>
+                                </div>
+                            </div>
+
+                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                                <div class="mb-2 flex items-start justify-between">
+                                    <div>
+                                        <div class="text-xs font-semibold">Wright Park</div>
+                                        <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-600">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Best Now
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400">4.0 km</span>
+                                </div>
+                                <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
+                                    <li>Horseback riding</li>
+                                    <li>Family friendly</li>
+                                    <li>Open shade</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <div class="text-[10px] text-slate-500">Card benefits: 5% off rentals</div>
+                                    <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Wright Park" data-lat="16.4140" data-lng="120.6229">Visit Now</button>
+                                </div>
+                            </div>
+
+                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                                <div class="mb-2 flex items-start justify-between">
+                                    <div>
+                                        <div class="text-xs font-semibold">Mines View Park</div>
+                                        <div class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Good Soon
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400">4.8 km</span>
+                                </div>
+                                <ul class="mb-2 list-disc pl-4 text-[10px] text-slate-600">
+                                    <li>Great viewpoint</li>
+                                    <li>Souvenir stalls</li>
+                                    <li>Snacks nearby</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <div class="text-[10px] text-slate-500">Card benefits: 10% off food</div>
+                                    <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700 js-visit-now" data-dest="Mines View Park" data-lat="16.4205" data-lng="120.6335">Visit Now</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            
+                <!-- Route Map Panel -->
+                <section id="route-map-panel" class="hidden lg:col-span-8 w-full md:w-full lg:col-span-12">
+                    <div class="rounded-2xl bg-white p-3 shadow-card">
+                        <div class="mb-2 flex items-center justify-between">
+                            <div>
+                                <div id="route-dest-title" class="text-xs font-semibold">Routes</div>
+                                <div class="text-[10px] text-slate-500">Showing fastest and shortest paths</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="use-geoloc-btn" class="hidden md:inline-flex rounded-lg border border-slate-200 px-2.5 py-1.5 text-[10px] text-slate-700 hover:bg-slate-50">Use My Location</button>
+                                <button id="close-map-btn" class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[10px] text-slate-700 hover:bg-slate-50">Close</button>
+                            </div>
+                        </div>
+                        <!-- Mode switcher -->
+                        <div class="mb-3 flex flex-wrap items-center gap-2">
+                            <div class="text-[10px] text-slate-500">Mode:</div>
+                            <div id="mode-switch" class="inline-flex rounded-lg border border-slate-200 p-1">
+                                <button data-mode="private" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50 bg-slate-100">Private</button>
+                                <button data-mode="taxi" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Taxi</button>
+                                <button data-mode="jeepney" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Jeepney</button>
+                                <button data-mode="walking" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Walking</button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-3 md:grid-cols-4">
+                            <div class="md:col-span-3">
+                                <div id="route-map" class="h-[360px] w-full rounded-xl border border-slate-100"></div>
+                            </div>
+                            <div class="md:col-span-1">
+                                <div class="rounded-xl border border-slate-100 p-2 text-[12px]">
+                                    <div class="mb-2 font-semibold">Route Options</div>
+                                    <ul id="route-list" class="space-y-2"></ul>
+                                    <!-- POI list for Taxi/Jeepney -->
+                                    <div id="poi-section" class="mt-3 hidden">
+                                        <div id="poi-title" class="mb-1 text-[11px] font-semibold text-slate-700">Nearby</div>
+                                        <ul id="poi-list" class="space-y-2"></ul>
+                                    </div>
+                                    <div class="mt-2 text-[10px] text-slate-500">Legend: <span class="inline-block h-2 w-3 rounded-sm bg-emerald-500 align-middle"></span> Shortest · <span class="inline-block h-2 w-3 rounded-sm bg-sky-500 align-middle"></span> Fastest · <span class="inline-block h-2 w-3 rounded-sm bg-slate-300 align-middle"></span> Alternate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-            <!-- Route Map Panel -->
-            <section id="route-map-panel" class="hidden lg:col-span-8 w-[56%] md:w-full">
-                <div class="rounded-2xl bg-white p-3 shadow-card">
-                    <div class="mb-2 flex items-center justify-between">
+                <!-- Active Balance (actual content) -->
+                <section id="active-balance" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-2 lg:col-start-9 w-full md:w-full">
+                    <div class="mb-3 flex items-start justify-between">
                         <div>
-                            <div id="route-dest-title" class="text-xs font-semibold">Routes</div>
-                            <div class="text-[10px] text-slate-500">Showing fastest and shortest paths</div>
+                            <div class="text-xs font-semibold">Active Balance</div>
+                            <div id="active-card-label" class="text-[10px] text-slate-500">Baguio Smart Card (R-4H52)</div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button id="use-geoloc-btn" class="hidden md:inline-flex rounded-lg border border-slate-200 px-2.5 py-1.5 text-[10px] text-slate-700 hover:bg-slate-50">Use My Location</button>
-                            <button id="close-map-btn" class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[10px] text-slate-700 hover:bg-slate-50">Close</button>
-                        </div>
+                        <button class="text-[10px] text-brand-700 hover:underline">View All</button>
                     </div>
-                    <!-- Mode switcher -->
-                    <div class="mb-3 flex flex-wrap items-center gap-2">
-                        <div class="text-[10px] text-slate-500">Mode:</div>
-                        <div id="mode-switch" class="inline-flex rounded-lg border border-slate-200 p-1">
-                            <button data-mode="private" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50 bg-slate-100">Private</button>
-                            <button data-mode="taxi" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Taxi</button>
-                            <button data-mode="jeepney" class="mode-btn rounded-md px-2 py-1 text-[10px] font-medium text-slate-700 hover:bg-slate-50">Jeepney</button>
+                    <div class="mb-3 flex items-end justify-between">
+                        <div>
+                            <div id="balance-amount" class="text-2xl font-extrabold">₱487.50</div>
+                            <div class="text-[10px] text-emerald-600">+ ₱50 today</div>
                         </div>
+                        <button class="js-topup-open rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Top Up</button>
                     </div>
-                    <div class="grid grid-cols-1 gap-3 md:grid-cols-4">
-                        <div class="md:col-span-3">
-                            <div id="route-map" class="h-[360px] w-full rounded-xl border border-slate-100"></div>
-                        </div>
-                        <div class="md:col-span-1">
-                            <div class="rounded-xl border border-slate-100 p-2 text-[12px]">
-                                <div class="mb-2 font-semibold">Route Options</div>
-                                <ul id="route-list" class="space-y-2"></ul>
-                                <!-- POI list for Taxi/Jeepney -->
-                                <div id="poi-section" class="mt-3 hidden">
-                                    <div id="poi-title" class="mb-1 text-[11px] font-semibold text-slate-700">Nearby</div>
-                                    <ul id="poi-list" class="space-y-2"></ul>
-                                </div>
-                                <div class="mt-2 text-[10px] text-slate-500">Legend: <span class="inline-block h-2 w-3 rounded-sm bg-emerald-500 align-middle"></span> Shortest · <span class="inline-block h-2 w-3 rounded-sm bg-sky-500 align-middle"></span> Fastest · <span class="inline-block h-2 w-3 rounded-sm bg-slate-300 align-middle"></span> Alternate</div>
+                    <div class="space-y-2">
+                        <!-- Activity rows -->
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🚌</span>
+                                <div class="text-slate-700">Shuttle Ride - Session Road</div>
                             </div>
+                            <div class="font-medium text-slate-800">₱15</div>
+                        </div>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🅿️</span>
+                                <div class="text-slate-700">Burnham Park Parking</div>
+                            </div>
+                            <div class="font-medium text-slate-800">₱25</div>
+                        </div>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🎟️</span>
+                                <div class="text-slate-700">Card Discount Applied</div>
+                            </div>
+                            <div class="font-medium text-emerald-600">-₱50</div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Active Balance (actual content) -->
-            <section id="active-balance" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-2 lg:col-start-9 w-[56%] md:w-full">
-                <div class="mb-3 flex items-start justify-between">
-                    <div>
-                        <div class="text-xs font-semibold">Active Balance</div>
-                        <div id="active-card-label" class="text-[10px] text-slate-500">Baguio Smart Card (R-4H52)</div>
+                <!-- Parking Availability -->
+                <section id="parking-availability" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-3 lg:col-start-9 w-full md:w-full">
+                    <div class="mb-2 flex items-center justify-between">
+                        <div class="text-xs font-semibold">Parking Availability</div>
+                        <button class="text-[10px] text-brand-700 hover:underline">View Map</button>
                     </div>
-                    <button class="text-[10px] text-brand-700 hover:underline">View All</button>
-                </div>
-                <div class="mb-3 flex items-end justify-between">
-                    <div>
-                        <div id="balance-amount" class="text-2xl font-extrabold">₱487.50</div>
-                        <div class="text-[10px] text-emerald-600">+ ₱50 today</div>
-                    </div>
-                    <button class="js-topup-open rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Top Up</button>
-                </div>
-                <div class="space-y-2">
-                    <!-- Activity rows -->
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
-                        <div class="flex items-center gap-2">
-                            <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🚌</span>
-                            <div class="text-slate-700">Shuttle Ride - Session Road</div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">Burnham Park Parking</div>
+                                <div class="text-[10px] text-slate-500">15/100 spaces · 0.9 km</div>
+                            </div>
+                            <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
                         </div>
-                        <div class="font-medium text-slate-800">₱15</div>
-                    </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
-                        <div class="flex items-center gap-2">
-                            <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🅿️</span>
-                            <div class="text-slate-700">Burnham Park Parking</div>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">Session Road Parking</div>
+                                <div class="text-[10px] text-slate-500">3/40 spaces · 0.4 km</div>
+                            </div>
+                            <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
                         </div>
-                        <div class="font-medium text-slate-800">₱25</div>
-                    </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-2 text-[12px]">
-                        <div class="flex items-center gap-2">
-                            <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100">🎟️</span>
-                            <div class="text-slate-700">Card Discount Applied</div>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">SM City Baguio Parking</div>
+                                <div class="text-[10px] text-slate-500">12/500 spaces · 1.2 km</div>
+                            </div>
+                            <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
                         </div>
-                        <div class="font-medium text-emerald-600">-₱50</div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Parking Availability -->
-            <section id="parking-availability" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-3 lg:col-start-9 w-[56%] md:w-full">
-                <div class="mb-2 flex items-center justify-between">
-                    <div class="text-xs font-semibold">Parking Availability</div>
-                    <button class="text-[10px] text-brand-700 hover:underline">View Map</button>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">Burnham Park Parking</div>
-                            <div class="text-[10px] text-slate-500">15/100 spaces · 0.9 km</div>
-                        </div>
-                        <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
-                    </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">Session Road Parking</div>
-                            <div class="text-[10px] text-slate-500">3/40 spaces · 0.4 km</div>
-                        </div>
-                        <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
-                    </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">SM City Baguio Parking</div>
-                            <div class="text-[10px] text-slate-500">12/500 spaces · 1.2 km</div>
-                        </div>
-                        <button class="rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700">Reserve</button>
-                    </div>
-                </div>
-            </section>
+                </section>
 
             <!-- Shuttle Routes -->
-            <section id="shuttle-routes" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-4 lg:col-start-9 w-[56%] md:w-full">
-                <div class="mb-2 flex items-center justify-between">
-                    <div class="text-xs font-semibold">Shuttle Routes</div>
-                    <button class="text-[10px] text-brand-700 hover:underline">View Schedules</button>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">City Circle Route</div>
-                            <div class="text-[10px] text-slate-500">Every 10 mins</div>
-                        </div>
-                        <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="city-circle">Book Now</button>
+                <section id="shuttle-routes" class="mb-4 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-4 lg:col-start-9 w-full md:w-full">
+                    <div class="mb-2 flex items-center justify-between">
+                        <div class="text-xs font-semibold">Shuttle Routes</div>
+                        <button class="text-[10px] text-brand-700 hover:underline">View Schedules</button>
                     </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">Tourist Spots Shuttle</div>
-                            <div class="text-[10px] text-slate-500">Every 20 mins</div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">City Circle Route</div>
+                                <div class="text-[10px] text-slate-500">Every 10 mins</div>
+                            </div>
+                            <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="city-circle">Book Now</button>
                         </div>
-                        <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="tourist-spots">Book Now</button>
-                    </div>
-                    <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
-                        <div class="text-xs">
-                            <div class="font-semibold">Shopping District Loop</div>
-                            <div class="text-[10px] text-slate-500">Every 12 mins</div>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">Tourist Spots Shuttle</div>
+                                <div class="text-[10px] text-slate-500">Every 20 mins</div>
+                            </div>
+                            <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="tourist-spots">Book Now</button>
                         </div>
-                        <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="shopping-district">Book Now</button>
+                        <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
+                            <div class="text-xs">
+                                <div class="font-semibold">Shopping District Loop</div>
+                                <div class="text-[10px] text-slate-500">Every 12 mins</div>
+                            </div>
+                            <button class="js-shuttle-book rounded-lg bg-brand-600 px-3 py-1.5 text-[10px] font-semibold text-white hover:bg-brand-700" data-route-id="shopping-district">Book Now</button>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Quick Actions -->
-            <section class="mb-20 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-5 lg:col-start-9 w-[56%] md:w-full">
-                <div class="mb-2 flex items-center justify-between">
-                    <div class="text-xs font-semibold">Quick Actions</div>
-                    <button class="text-[10px] text-brand-700 hover:underline">Customize</button>
-                </div>
+                <!-- Quick Actions -->
+                <section class="mb-20 rounded-2xl bg-white p-3 shadow-card lg:col-span-4 lg:row-start-5 lg:col-start-9 w-full md:w-full">
+                    <div class="mb-2 flex items-center justify-between">
+                        <div class="text-xs font-semibold">Quick Actions</div>
+                        <button class="text-[10px] text-brand-700 hover:underline">Customize</button>
+                    </div>
 
-                <div class="grid grid-cols-4 gap-2 text-center text-[10px]">
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="topup">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-700">➕</span>
-                        <span>Top-up</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="buy-card">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700">💳</span>
-                        <span>Buy Card</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="bus-routes">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-700">🚌</span>
-                        <span>Bus Routes</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="parking">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-700">🅿️</span>
-                        <span>Parking</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="book-tour">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-pink-50 text-pink-700">📸</span>
-                        <span>Book Tour</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="map">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-sky-700">🗺️</span>
-                        <span>Map</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="settings">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50 text-orange-700">⚙️</span>
-                        <span>Settings</span>
-                    </button>
-                    <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="help">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-slate-700">ℹ️</span>
-                        <span>Help</span>
-                    </button>
-                </div>
+                    <div class="grid grid-cols-4 gap-2 text-center text-[10px]">
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="topup">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-700">➕</span>
+                            <span>Top-up</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="buy-card">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700">💳</span>
+                            <span>Buy Card</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="bus-routes">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-700">🚌</span>
+                            <span>Bus Routes</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="parking">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-700">🅿️</span>
+                            <span>Parking</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="book-tour">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-pink-50 text-pink-700">📸</span>
+                            <span>Book Tour</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="map">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-sky-700">🗺️</span>
+                            <span>Map</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="settings">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50 text-orange-700">⚙️</span>
+                            <span>Settings</span>
+                        </button>
+                        <button class="js-qa flex flex-col items-center gap-1 rounded-xl border border-slate-100 p-3 hover:bg-slate-50" data-action="help">
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-slate-700">ℹ️</span>
+                            <span>Help</span>
+                        </button>
+                    </div>
 
-                <div class="mt-4">
-                    <button class="js-topup-open w-full rounded-xl bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700" data-amount="500">Top-up ₱500</button>
-                </div>
-            </section>
+                    <div class="mt-4">
+                        <button class="js-topup-open w-full rounded-xl bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700" data-amount="500">Top-up ₱500</button>
+                    </div>
+                </section>
 
             </main>
         </div>
