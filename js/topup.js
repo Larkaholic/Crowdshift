@@ -85,7 +85,7 @@
     // Review
     const feeRate = state.method === 'card' || state.method === 'ewallet' ? 0.015 : 0;
     const fees = state.amount * feeRate;
-    const total = state.amount + fees;
+    const total = state.amount - fees;
     el('tp-review').innerHTML = `
       <div class="flex items-center justify-between"><span>Amount</span><span>₱${state.amount.toFixed(2)}</span></div>
       <div class="flex items-center justify-between"><span>Method</span><span>${state.method === 'card' ? 'Card' : state.method === 'ewallet' ? 'E‑Wallet' : 'Kiosk'}</span></div>
